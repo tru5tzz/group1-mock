@@ -42,3 +42,5 @@ Một khi code đã ổn định, hoạt động như mong muốn hoặc đạt 
 Do có nhiều người cùng làm trên một nhánh, sẽ không tránh khỏi việc 
 
 ## Một số vấn đề và cách khắc phục
+
+### How to resolve conflicts when pulling before committing.
