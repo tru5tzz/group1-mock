@@ -17,7 +17,7 @@ Một số keyword cần quan tâm như:
 
 Có rất nhiều tài nguyên ở nhiều dạng, từ text đến video để học git:
 
-1. Sách ProGit: https://git-scm.com/book/en/v2 - Trước mắt quan tâm chương 2, 3, 5
+1. [Sách ProGit](https://git-scm.com/book/en/v2) - Trước mắt quan tâm chương 2, 3, 5
 
 ## Về file gitignore
 
@@ -48,7 +48,6 @@ Khi này project đã được import xong nhưng vẫn còn thiếu một vài 
 ![generator](pics/generator_config.jpg)
 
 Sau khi gen xong, nhớ build thử xem có vấn đề gì không.
-
 
 ## Hướng dẫn chung khi sử dụng repo này
 
