@@ -19,6 +19,14 @@ Có rất nhiều tài nguyên ở nhiều dạng, từ text đến video để 
 
 1. [Sách ProGit](https://git-scm.com/book/en/v2) - Trước mắt quan tâm chương 2, 3, 5
 
+## Bắt đầu
+
+1. Mở terminal (hoặc cmd hoặc powershell trên máy lên), clone repo này về.
+2. Copy thư mục project từ workspace của Sim vào đây
+3. Chạy `git add *` để thêm toàn bộ thư mục vào staged
+4. Chạy `git commit -m "Mô tả ngắn"` để commit. Nhớ thay "Mô tả ngắn" thành mô tả mong muốn nhé
+5. Chạy `git push` để đẩy lên repo remote.
+
 ## Về file gitignore
 
 Trong thư mục project do Simplicity Studio tạo ra, có một vài thư mục không đáng hoặc không phù hợp để sao chép giữa các máy. Ví dụ như thư mục `autogen` là nơi chứa các file code do Sim tự tạo ra dựa vào thiết lập của các Software Component, hay như tập tin chứa các file output của quá trình build project...
