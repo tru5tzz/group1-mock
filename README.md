@@ -27,6 +27,17 @@ Do đó tập tin `.gitignore` được thêm vào là để loại bỏ việc 
 
 Đừng thấy lạ nếu thư mục trên Github thiếu đi một vài file hoặc thư mục có trên máy tính.
 
+### Giữ lại những gì và push đi những gì?
+
+Trong cây dự án tạo bởi Simplicity Studio 5 sẽ có những thư mục quan trọng cần được dữ lại sau:
+
+1. .pdm - Chứa các setting liên quan tới các module software component được thêm vào
+2. .settings - Chưa rõ
+3. .uceditor - Có thể là chứa cài đặt
+4. config - Chứa các cài đặt của từng module, component trong project, cần được dữ lại.
+
+Hiện tại thì vai trò của hai thư mục là `config` và `.pdm` thì đã được xác định rõ, hai thư mục còn lại mới chỉ dừng lại ở mức phỏng đoán, cần thử nghiệm thêm để xác nhận.
+
 ## Cách import project đã clone vào workspace của Simplicity Studio
 
 Sau khi clone được project về thì sẽ tiến hành import nó vào workspace của Simplicity Studio. Các bước thực hiện như bên dưới:
@@ -80,3 +91,7 @@ Cách xử lý như sau:
 5. Push lên remote.
 
 Phần nội dung conflict do người khác thay đổi có thể là quan trọng, hãy tham khảo ý kiến chủ commit trước khi sửa, xóa, gộp để đi đến giải pháp toàn diện nhất.
+
+## Sau khi import vào Simplicity Studio rồi thì làm việc thế nào?
+
+Phần này còn đang dự kiến
