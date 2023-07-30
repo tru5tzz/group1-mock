@@ -41,7 +41,7 @@ To make gateway node the application, do the following:
  gateway_define.h
  sl_btmesh_uuid.c,sl_btmesh_uuid.h
 7. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
-sl_bt_provisionee_on_event(evt). And then flash to device
+sl_bt_provisionee_on_event(evt). And then build and flash to device again.
 8. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
