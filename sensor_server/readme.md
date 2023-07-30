@@ -53,12 +53,12 @@ To run the application, do the following:
 
 1. Make sure a bootloader is installed. See the Troubleshooting section.
 2. Build and flash the **Bluetooth Mesh - SoC Sensor Server** example to your device.
-3. If not run in low power mode, do the next step.
-For run an example of a Low Power Node-enabled energy efficient Bluetooth Mesh switch application. The example need removes LCD display and logging features as:
+3. If not run in low power mode, do step 6.
+For run an example of a Low Power Node-enabled energy-efficient Bluetooth Mesh switch application. The example need to remove LCD display and logging features:
 event logging, log, iostream usart, command line interface
 4. Delete file app_out_log.c
-5. Copy file below into project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h. Build and flash to device again.
-6. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen.
+5. Copy the file below into the project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h. Build and flash to the device again.
+6. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen if not run in a low-power node.
 7. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
