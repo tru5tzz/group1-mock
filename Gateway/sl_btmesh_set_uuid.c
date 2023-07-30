@@ -42,7 +42,7 @@
 #define CHAR_MAX                255
 
 static  uuid_128 my_uuid_device;
-static  uint8_t company_uuid[LENGTH_COMPANY_ID]={0,0,2,255,0,1};
+static  uint8_t company_uuid[LENGTH_COMPANY_ID]={0,0,2,255,0,2};
 
 void sl_btmesh_set_my_uuid(sl_bt_msg_t *evt)
 {

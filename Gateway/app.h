@@ -61,11 +61,4 @@ void app_show_btmesh_node_provisioning_started(uint16_t result);
  ******************************************************************************/
 void app_show_btmesh_node_provisioned(uint16_t address, uint32_t iv_index);
 
-/***************************************************************************//**
- * Get the currently set property ID
- *
- * @return Current property ID
- ******************************************************************************/
-mesh_device_properties_t app_get_current_property(void);
-
 #endif // APP_H

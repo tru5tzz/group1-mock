@@ -1,14 +1,4 @@
-# Bluetooth Mesh - SoC Switch
-
-The **Bluetooth Mesh - SoC Switch** example is a working example application that you can use as a template for Bluetooth Mesh Switch applications.
-
-The example is an out-of-the-box Software Demo optimized for user experience where the device acts as a switch. Button presses on the mainboard or CLI commands can control the state, lightness, and color temperature of the LEDs as well as scenes on a remote device (for example **Bluetooth Mesh - SoC Light**). The example also acts as a Low Power Node and tries to establish friendship. The status messages are displayed on the LCD (if one is present on the mainboard) and also sent to UART. The example is based on the Bluetooth Mesh Generic On/Off Client Model, the Light Lightness Client Model, the Light CTL Client Model, and the Scene Client Model. This example requires one of the Internal Storage Bootloader (single image) variants, depending on device memory.
-
-In typical cases use the **Bluetooth Mesh - SoC Switch** example, as it is easier to get feedback about the state and operations. But if you want to have the optimal power consumption, use the **Bluetooth Mesh - SoC Switch Low Power** example, which does not have LCD, CLI or logging. Use that especially for the power consumption measurements.
-
-The switch requires a friend node to function properly.
-
-![Bluetooth Mesh lighting system - Switch](readme_img7.png)
+# Bluetooth Mesh - GATEWAY
 
 ## Getting Started
 
@@ -17,18 +7,6 @@ To learn Bluetooth mesh technology basics, see [Bluetooth Mesh Network - An Intr
 To get started with Bluetooth Mesh and Simplicity Studio, see [QSG176: Bluetooth Mesh SDK v2.x Quick Start Guide](https://www.silabs.com/documents/public/quick-start-guides/qsg176-bluetooth-mesh-sdk-v2x-quick-start-guide.pdf).
 
 The term SoC stands for "System on Chip", meaning that this is a standalone application that runs on the EFR32/BGM and does not require any external MCU or other active components to operate.
-
-This is an example of a Low Power Node-enabled Bluetooth Mesh switch application. Once the node is provisioned and a light server (light node) subscribes to the client, the two buttons of the mainboard are used to publish the messages that will change the light lightness on the server.
-
-We can use the buttons many other ways using the different models of this example:
-
-- **Generic OnOff Client** model can turn the light on and off or toggle
-- **Generic Level Client** model can control the light brightness
-- **Light Lightness Client** model can control the light Lightness
-- **Light CTL Client** model can control light Lightness and Color Temperature (Delta UV only virtually)
-- **Scene Server** model allows customer to recall the light settings
-
-A friendship with a light node has to be established for the switch node to start the sleep/poll cycles.
 
 To add or remove features from the example, follow this process:
 
@@ -48,27 +26,23 @@ To learn more about programming an SoC application, see [UG472: Silicon Labs Blu
 
 [UG295: Silicon Labs Bluetooth ® Mesh C Application Developer's Guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug295-bluetooth-mesh-dev-guide.pdf) gives code-level information on the stack and the common pitfalls to avoid.
 
-## Device Firmware Update
+## GUILINE - GATEWAY Application
 
-Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh Model specification v1.1 that provides a standard way to update device firmware over a Bluetooth mesh network. The example has the Updating node functionality enabled by default that is fulfilled by installing the Firmware Update and BLOB Transfer model components:
-
-- Firmware Update Server
-- BLOB Transfer Server
-
-![Bluetooth Mesh Firmware Update Components](readme_img9.png)
-
-![Bluetooth Mesh Transfer Components](readme_img10.png)
-
-For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
-
-## Testing the Bluetooth Mesh - SoC Switch Application
-
-To test the application, do the following:
+To make gateway node the application, do the following:
 
 1. Make sure a bootloader is installed. See the Troubleshooting section.
 2. Build and flash the **Bluetooth Mesh - SoC Switch** example to the device.
-3. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD.
-4. Provision the device in one of three ways:
+3. Add component: Sensor Client, Generic Server Models
+4. In dcd_config.btmeshconf, add models: Generic OnOff Server
+5. Config component Generic Base: Enable Generic On/Off Server
+6. Copy file below into project:
+ app.c, app.h
+ app_out_log.c, app_out_log.h
+ gateway_define.h
+ sl_btmesh_uuid.c,sl_btmesh_uuid.h
+7. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
+sl_bt_provisionee_on_event(evt). And then flash to device
+8. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
 
@@ -80,32 +54,20 @@ To test the application, do the following:
 
 ![Bluetooth Mesh start screen](readme_img6.png)
 
-5. Open the app, choose the Provision Browser, and tap **Scan**.
+9. Open the app, choose the Provision Browser, and tap **Scan**.
 
 ![Bluetooth Mesh Provision Browser](readme_img2.png)
 
-6. Tap **PROVISION** and continue provisioning.
+10. Tap **PROVISION** and continue provisioning.
 
 ![Bluetooth Mesh Provisioning Device](readme_img3.png)
 
-7. Select the right "Group" and then tap the "Functionality" menu.
+11. Select the right "Group" and then tap the "Functionality" menu.
 
 ![Bluetooth Mesh Device Configuration](readme_img4.png)
 
-8. Configure the device as **Light CTL Client**. If you want to test the Bluetooth Mesh Generic OnOff Model, the Light Lightness Model, the Scene Model or some other Mesh Model, then select the respective client instead. You can use only one at a time in our mobile application. With the **SoC Light HSL** demo use the Light Lightness Client.
-
-![Bluetooth Mesh Functionalities](readme_img5.png)
-
-9. The next step is to add a light or several lights into your network, if it has not already been done. This is required to fully test the whole system, for example the friendship and other features. You can then control the **Bluetooth Mesh - SoC Light** and **Bluetooth Mesh - SoC HSL Light** examples by pressing the buttons on the device. Read the applicable example project documentation to learn more.
-
-For more information on the example, see [AN1299: Understanding the Silicon Labs Bluetooth Mesh SDK v2.x Lighting Demonstration](https://www.silabs.com/documents/public/application-notes/an1299-understanding-bluetooth-mesh-lighting-demo-sdk-2x.pdf).
-
-The button presses in this example:
-
-- Short press controls the Lightness (**Light Lightness Client** and **Light CTL Client** models)
-- Medium press controls the Color Temperature (**Light CTL Client** model)
-- Long press controls the light On/Off (all Lighting models)
-- Very long press recalls the scenes (only when **Scene Server** model is configured)
+12.  Press button 0 to start the scanning device in mesh. After that, the console menu appears. 
+Enter character correct as required shown in the console menu.
 
 ## Troubleshooting
 
