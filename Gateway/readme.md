@@ -36,8 +36,8 @@ To make gateway node the application, do the following:
 4. In dcd_config.btmeshconf, add models: Generic OnOff Server
 5. Config component Generic Base: Enable Generic On/Off Server
 6. Copy file below into project:
- app.c, app.h
- app_out_log.c, app_out_log.h
+ app.c, app.h,
+ app_out_log.c, app_out_log.h,
  gateway_define.h
  sl_btmesh_uuid.c,sl_btmesh_uuid.h
 7. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
