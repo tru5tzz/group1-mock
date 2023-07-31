@@ -52,8 +52,7 @@ For run an example of a Low Power Node-enabled energy-efficient Bluetooth Mesh s
 And then add features: low power node. When adding a low-power node will have some problems, you need to re-config in components: Blob transfer server and Firmware update server. You can refer config in the example **Bluetooth Mesh - SoC Switch low power node** 
 5. Delete file app_out_log.c
 6. Copy the file below into the project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h.
-7. If you want to change the uuid device, do this step. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
-sl_bt_provisionee_on_event(evt). And then build and flash to the device again.
+7. Build and flash to the device again.
 8. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen if not run in a low-power node.
 9. Provision the device in one of three ways:
 
