@@ -1,10 +1,10 @@
-# Bluetooth Mesh - SoC Sensor Server
+# Bluetooth Mesh - SoC Sensor Client
 
-The **Bluetooth Mesh - SoC Sensor Server** example is a working example application that you can use as a template for Bluetooth Mesh Sensor Server applications.
+The **Bluetooth Mesh - SoC Sensor Client** example is a working example application that you can use as a template for Bluetooth Mesh Sensor Client applications.
 
-The example demonstrates the Bluetooth Mesh **Sensor Server Model** and **Sensor Setup Server Model**. It measures temperature and people count (and also illuminance with some parts such as *Thunderboard Sense 2* and *Thunderboard EFR32BG22*) and sends the measurement data to a remote device (for example, **Bluetooth Mesh - SoC Sensor Client**). The current status is displayed on the LCD (if one is present on the mainboard) and also sent to UART. CLI commands may substitute for button presses if the mainboard has only one button available. This example requires one of the Internal Storage Bootloader (single image) variants, depending on device memory.
+The example demonstrates the Bluetooth Mesh Sensor Client Model. It collects and displays sensor measurement data from remote device(s) (for example **Bluetooth Mesh - SoC Sensor Server**). The current status is displayed on the LCD (if one is present on the mainboard) and also sent to UART. CLI commands may substitute for button presses if the mainboard has only one button available. This example requires one of the Internal Storage Bootloader (single image) variants depending on device memory.
 
-![Bluetooth Mesh sensor system - Server](readme_img7.png)
+![Bluetooth Mesh sensor system - Client](readme_img7.png)
 
 ## Getting Started
 
@@ -13,6 +13,8 @@ To learn Bluetooth mesh technology basics, see [Bluetooth Mesh Network - An Intr
 To get started with Bluetooth Mesh and Simplicity Studio, see [QSG176: Bluetooth Mesh SDK v2.x Quick Start Guide](https://www.silabs.com/documents/public/quick-start-guides/qsg176-bluetooth-mesh-sdk-v2x-quick-start-guide.pdf).
 
 The term SoC stands for "System on Chip", meaning that this is a standalone application that runs on the EFR32/BGM and does not require any external MCU or other active components to operate.
+
+**Bluetooth Mesh - SoC Sensor Client** example collects sensor data from the sensor server. If it is used together with the soc-btmesh-sensor-server example then it will display occupancy (people count) sensor data, temperature data and illuminance (on Thunderboard Sense 2).
 
 To add or remove features from the example, follow this process:
 
@@ -45,19 +47,14 @@ Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh M
 
 For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
 
-## GUILINE SENSOR SERVER
+## Testing the Bluetooth Mesh - SoC Sensor Client Application
 
-To run the application, do the following:
+To test the application, do the following:
 
-1. Make sure a bootloader is installed. See the Troubleshooting section.
-2. Build and flash the **Bluetooth Mesh - SoC Sensor Server** example to your device.
-3. If not run in low power mode, do the next step.
-For run an example of a Low Power Node-enabled energy efficient Bluetooth Mesh switch application. The example need removes LCD display and logging features as:
-event logging, log, iostream usart, command line interface
-4. Delete file app_out_log.c
-5. Copy file below into project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h. Build and flash to device again.
-6. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen.
-7. Provision the device in one of three ways:
+1. Make sure a bootloader is installed. See Troubleshooting section.
+2. Build and flash the **Bluetooth Mesh - SoC Sensor Client** example to your device.
+3. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen.
+4. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
 
@@ -69,29 +66,30 @@ event logging, log, iostream usart, command line interface
 
 ![Bluetooth Mesh start screen](readme_img6.png)
 
-8. Open the app and choose the Provision Browser and tap **Scan**. The device sending unprovisioned beacons should appear, tap **PROVISION**:
+5. Open the app and choose the Provision Browser and tap **Scan**. The device sending unprovisioned beacons should appear, tap **PROVISION**:
 
 ![Bluetooth Mesh Provision Browser](readme_img2.png)
 
-9. Start provisioning using the "Continue" button:
+6. Start provisioning using the "Continue" button:
 
 ![Bluetooth Mesh Provisioning Device](readme_img3.png)
 
-10. Configure the device as "Sensor Server" (inheriting the server setup model) and select the correct group to which the messages will subscribe (Demo group).
+7. Configure the device as "Sensor Client" and select the correct group to which the messages will subscribe (Demo group).
 
 ![Bluetooth Mesh Device Configuration](readme_img4.png)
 
-11. Once the node is provisioned and correctly configured, it is ready to function in your demo network.
+8. Once the node is provisioned and correctly configured, it is ready to function in your demo network.
 
-![Sensor server with Proxy connection](readme_img5.png)
+![Sensor client with Proxy connection](readme_img5.png)
 
-12. The next step is to add a sensor client or several into your network, if it has not already been done. This is required to fully test the whole system. Read the applicable example project documentation to learn more.
+9. The next step is to add a sensor server or several into your network, if it has not already been done. This is required to fully test the whole system. Read the applicable example project documentation to learn more.
 
 For more information on the example, see [AN1300: Understanding the Silicon Labs Bluetooth Mesh SDK v2.x Sensor Model Demonstration](https://www.silabs.com/documents/public/application-notes/an1300-understanding-bluetooth-mesh-sensor-model-demo-sdk-2x.pdf).
 
 The button presses in this example:
 
-- Short presses will send the People Count value public to group
+- Short presses update the registered devices
+- Long press of PB0 changes the current property
 
 ## Troubleshooting
 
