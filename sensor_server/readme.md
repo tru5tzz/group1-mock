@@ -38,10 +38,15 @@ Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh M
 
 - Firmware Update Server
 - BLOB Transfer Server
-- 
-For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
 
-## GUILINE SENSOR SERVER
+For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
+## UPDATE OTA SECURE
+For updated OTA Secure follow step guidelines below:
+1. Need to add features: in-place OTA DFU. And uninstall DFU updating node
+2. Requires flash Bootloader - SoC Bluetooth AppLoader OTA DFU
+3. Step Next follow the document: https://www.silabs.com/documents/public/application-notes/an1086-gecko-bootloader-bluetooth.pdf
+
+## GUIDELINE SENSOR SERVER
 
 To run the application, do the following:
 
