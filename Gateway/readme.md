@@ -1,5 +1,7 @@
 # Bluetooth Mesh - GATEWAY
 
+The example demonstrates the Bluetooth Mesh **Gateway** . It demos for scanning all uuid addresses in the network by pushing the button (code run for **BGM220 Explore kit**) and saving it. After that device can control individual remote lights in mesh via the usart command on the console menu. This example requires one of the Internal Storage Bootloader (single image) variants, depending on the device's memory.
+
 ## Getting Started
 
 To learn Bluetooth mesh technology basics, see [Bluetooth Mesh Network - An Introduction for Developers](https://www.bluetooth.com/wp-content/uploads/2019/03/Mesh-Technology-Overview.pdf).
@@ -17,7 +19,7 @@ To add or remove features from the example, follow this process:
 
 To learn more about programming an SoC application, see [UG472: Silicon Labs Bluetooth ® Mesh Configurator User's guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug472-bluetooth-mesh-v2x-node-configuration-users-guide.pdf).
 
-- Some components are configurable, and can be customized using the Component Editor
+- Some components are configurable and can be customized using the Component Editor
 
 ![Bluetooth Mesh Components](readme_img8.png)
 
@@ -28,20 +30,20 @@ To learn more about programming an SoC application, see [UG472: Silicon Labs Blu
 
 ## GUILINE - GATEWAY Application
 
-To make gateway node the application, do the following:
+To make the gateway node the application, do the following:
 
 1. Make sure a bootloader is installed. See the Troubleshooting section.
 2. Build and flash the **Bluetooth Mesh - SoC Switch** example to the device.
 3. Add component: Sensor Client, Generic Server Models
 4. In dcd_config.btmeshconf, add models: Generic OnOff Server
 5. Config component Generic Base: Enable Generic On/Off Server
-6. Copy file below into project:
+6. Copy the file below into the project:
  app.c, app.h,
  app_out_log.c, app_out_log.h,
  gateway_define.h
  sl_btmesh_uuid.c,sl_btmesh_uuid.h
-7. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
-sl_bt_provisionee_on_event(evt). And then build and flash to device again.
+7. If you want to change the uuid device, do this step. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
+sl_bt_provisionee_on_event(evt). And then build and flash to the device again.
 8. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
