@@ -49,8 +49,7 @@ To run the application, do the following:
 2. Build and flash the **Bluetooth Mesh - SoC Sensor Client** example to your device.
 3.  If not run in low power mode in the model sensor server skip this step. Add features: Friend 
 5. Copy the file below into the project: app.c, app_out_logc.c, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h.
-6. If you want to change the uuid device, do this step. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
-sl_bt_provisionee_on_event(evt). And then build and flash to the device again. Build and flash to the device again.
+6. Build and flash to the device again.
 7. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen if not run in a low-power node.
 8. Provision the device in one of three ways:
 
