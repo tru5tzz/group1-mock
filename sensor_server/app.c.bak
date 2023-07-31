@@ -55,7 +55,6 @@
 #include "sl_btmesh_sensor_people_count.h"
 #include "sl_btmesh_sensor_server.h"
 #include "sl_btmesh_lpn.h"
-#include "sl_btmesh_set_uuid.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************

@@ -49,6 +49,7 @@
 #include "sl_btmesh_factory_reset.h"
 #include "sl_btmesh_provisioning_decorator.h"
 #include "app_button_press.h"
+#include "sl_btmesh_set_uuid.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
