@@ -68,10 +68,12 @@
 static sl_simple_timer_t app_led_blinking_timer;
 // maximum duticycle
 #define PWM_MAX_DUTY_CYCLE             100
-
+// length of unicast address
+#define LENGTH_UNICAST_ADDRESS         2
 /// confirm provision done
 //static bool init_provision_done = false;
 
+static void device_init_change_uuid();
 /// Handles button press and does a factory reset
 static bool handle_reset_conditions(void);
 /**************************************************************************//**
@@ -110,11 +112,20 @@ SL_WEAK void app_process_action(void)
  *****************************************************************************/
 void sl_bt_on_event(struct sl_bt_msg *evt)
 {
+//  static uint8_t address_light[LENGTH_UNICAST_ADDRESS];
+//  static uint8_t *num_th_light[2];
+
   switch (SL_BT_MSG_ID(evt->header)) {
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
-    case sl_bt_evt_connection_opened_id:
+   case sl_bt_evt_system_boot_id:
+     if(!handle_reset_conditions())
+       {
+         device_init_change_uuid();
+       }
+     break;
+   case sl_bt_evt_connection_opened_id:
           app_log("Connected" APP_LOG_NL);
           break;
    case sl_bt_evt_connection_closed_id:
@@ -190,7 +201,7 @@ static void set_device_name(uuid_128 *uuid)
     // Create unique device name using the last two bytes of the device UUID
     snprintf(name,
              NAME_BUF_LEN,
-             "sensor client %02x%02x",
+             "light node %02x%02x",
              uuid->data[14],
              uuid->data[15]);
     app_log("Device name: '%s'" APP_LOG_NL, name);
@@ -269,4 +280,16 @@ void app_button_press_cb(uint8_t button, uint8_t duration)
   (void)button;
   (void)duration;
 }
+static void device_init_change_uuid() {
+  uuid_128 temp;
+  sl_status_t retval;
+  retval = sl_btmesh_node_get_uuid(&temp);
+  app_assert_status_f(retval, "Getting UUID failed:\n");
+  temp.data[0] = 0x02;
+  temp.data[1] = 0xFF;
+  temp.data[2] = 0x00;
+  temp.data[3] = 0x01;
 
+  retval = sl_btmesh_node_set_uuid(temp);
+  app_assert_status_f(retval, "Setting UUID failed\n");
+}

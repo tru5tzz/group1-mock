@@ -30,7 +30,9 @@ component:
 - {id: btmesh_stack_node}
 - {id: btmesh_factory_reset}
 - {id: btmesh_provisionee}
+- {id: btmesh_sensor_client}
 - {id: btmesh_event_log}
+- {id: in_place_ota_dfu}
 - {id: mpu}
 - {id: btmesh_lighting_server}
 - instance: [led0]

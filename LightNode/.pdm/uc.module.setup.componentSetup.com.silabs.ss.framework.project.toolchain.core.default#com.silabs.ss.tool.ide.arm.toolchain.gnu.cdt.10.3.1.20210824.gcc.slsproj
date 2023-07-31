@@ -591,12 +591,25 @@
             <file name="sl_btmesh_provisioning_decorator.c" uri="studio:/sdk/app/btmesh/common/btmesh_provisioning_decorator/sl_btmesh_provisioning_decorator.c"/>
             <file name="sl_btmesh_provisioning_decorator.h" uri="studio:/sdk/app/btmesh/common/btmesh_provisioning_decorator/sl_btmesh_provisioning_decorator.h"/>
           </folder>
+          <folder name="btmesh_sensor_client">
+            <file name="sl_btmesh_sensor_client.c" uri="studio:/sdk/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.c"/>
+            <file name="sl_btmesh_sensor_client.h" uri="studio:/sdk/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.h"/>
+          </folder>
+        </folder>
+      </folder>
+      <folder name="bluetooth">
+        <folder name="common">
+          <folder name="in_place_ota_dfu">
+            <file name="sl_bt_in_place_ota_dfu.c" uri="studio:/sdk/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.c"/>
+            <file name="sl_bt_in_place_ota_dfu.h" uri="studio:/sdk/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.h"/>
+          </folder>
         </folder>
       </folder>
     </folder>
     <folder name="protocol">
       <folder name="bluetooth">
         <folder name="src">
+          <file name="sl_apploader_util_s2.c" uri="studio:/sdk/protocol/bluetooth/src/sl_apploader_util_s2.c"/>
           <file name="sli_bt_advertiser_config.c" uri="studio:/sdk/protocol/bluetooth/src/sli_bt_advertiser_config.c"/>
           <file name="sli_bt_connection_config.c" uri="studio:/sdk/protocol/bluetooth/src/sli_bt_connection_config.c"/>
           <file name="sli_bt_dynamic_gattdb_config.c" uri="studio:/sdk/protocol/bluetooth/src/sli_bt_dynamic_gattdb_config.c"/>
@@ -609,8 +622,10 @@
           <file name="sl_bt_stack_init.c" uri="studio:/sdk/protocol/bluetooth/src/sl_bt_stack_init.c"/>
           <file name="sl_btmesh_lib.c" uri="studio:/sdk/protocol/bluetooth/src/sl_btmesh_lib.c"/>
           <file name="sl_btmesh_serdeser.c" uri="studio:/sdk/protocol/bluetooth/src/sl_btmesh_serdeser.c"/>
+          <file name="sl_btmesh_sensor.c" uri="studio:/sdk/protocol/bluetooth/src/sl_btmesh_sensor.c"/>
         </folder>
         <folder name="inc">
+          <file name="sl_apploader_util.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_apploader_util.h"/>
           <file name="sli_bt_config_defs.h" uri="studio:/sdk/protocol/bluetooth/inc/sli_bt_config_defs.h"/>
           <file name="sli_bt_advertiser_config.h" uri="studio:/sdk/protocol/bluetooth/inc/sli_bt_advertiser_config.h"/>
           <file name="sli_bt_connection_config.h" uri="studio:/sdk/protocol/bluetooth/inc/sli_bt_connection_config.h"/>
@@ -641,6 +656,9 @@
           <file name="sl_btmesh_lib.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_lib.h"/>
           <file name="sl_btmesh_serdeser.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_serdeser.h"/>
           <file name="sl_btmesh_lighting_model_capi_types.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_lighting_model_capi_types.h"/>
+          <file name="sl_btmesh_device_properties.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_device_properties.h"/>
+          <file name="sl_btmesh_sensor_model_capi_types.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_sensor_model_capi_types.h"/>
+          <file name="sl_btmesh_sensor.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_sensor.h"/>
           <file name="sl_btmesh_provisioning_records.h" uri="studio:/sdk/protocol/bluetooth/inc/sl_btmesh_provisioning_records.h"/>
         </folder>
         <folder name="bgstack">
@@ -865,8 +883,8 @@
   <includePath uri="studio:/sdk/app/common/util/app_button_press"/>
   <includePath uri="studio:/sdk/app/common/util/app_log"/>
   <includePath uri="studio:/sdk/app/common/util/app_timer"/>
-  <includePath uri="studio:/sdk/platform/common/inc"/>
   <includePath uri="studio:/sdk/protocol/bluetooth/inc"/>
+  <includePath uri="studio:/sdk/platform/common/inc"/>
   <includePath uri="studio:/sdk/protocol/bluetooth/bgstack/ll/inc"/>
   <includePath uri="studio:/sdk/hardware/board/inc"/>
   <includePath uri="studio:/sdk/platform/bootloader"/>
@@ -876,6 +894,7 @@
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_lighting_server"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisionee"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisioning_decorator"/>
+  <includePath uri="studio:/sdk/app/btmesh/common/btmesh_sensor_client"/>
   <includePath uri="studio:/sdk/platform/driver/button/inc"/>
   <includePath uri="studio:/sdk/platform/CMSIS/Core/Include"/>
   <includePath uri="studio:/sdk/hardware/driver/configuration_over_swo/inc"/>
@@ -888,6 +907,7 @@
   <includePath uri="studio:/sdk/platform/emlib/inc"/>
   <includePath uri="studio:/sdk/platform/radio/rail_lib/plugin/fem_util"/>
   <includePath uri="studio:/sdk/platform/emdrv/gpiointerrupt/inc"/>
+  <includePath uri="studio:/sdk/app/bluetooth/common/in_place_ota_dfu"/>
   <includePath uri="studio:/sdk/platform/service/iostream/inc"/>
   <includePath uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config"/>
   <includePath uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config/preset"/>
@@ -918,6 +938,7 @@
   <includePath uri="studio:/sdk/platform/security/sl_component/sl_protocol_crypto/src"/>
   <macroDefinition name="BGM220PC22HNA"/>
   <macroDefinition name="SL_APP_PROPERTIES"/>
+  <macroDefinition name="BOOTLOADER_APPLOADER" value="1"/>
   <macroDefinition name="HARDWARE_BOARD_DEFAULT_RF_BAND_2400"/>
   <macroDefinition name="HARDWARE_BOARD_SUPPORTS_1_RF_BAND"/>
   <macroDefinition name="HARDWARE_BOARD_SUPPORTS_RF_BAND_2400"/>
