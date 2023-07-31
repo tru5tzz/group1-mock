@@ -2,7 +2,7 @@
 
 The **Bluetooth Mesh - SoC Sensor Client** example is a working example application you can use as a template for Bluetooth Mesh Sensor Client applications.
 
-The example demonstrates the Bluetooth Mesh **Sensor Client Model**. It demo for detecting signals send by a remote device (for example, **Bluetooth Mesh - SoC Sensor Server**) to turn on led in period time config before (code run for **BGM220 Explore kit**). This example requires one of the Internal Storage Bootloader (single image) variants, depending on the device's memory.
+The example demonstrates the Bluetooth Mesh **Sensor Client Model**. It demos for detecting signals send by a remote device (for example, **Bluetooth Mesh - SoC Sensor Server**) to turn on led in period time config before (code run for **BGM220 Explore kit**). This example requires one of the Internal Storage Bootloader (single image) variants, depending on the device's memory.
 
 ![Bluetooth Mesh sensor system - Client](readme_img7.png)
 
