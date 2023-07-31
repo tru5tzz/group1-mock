@@ -50,32 +50,52 @@
 #include "sl_simple_timer.h"
 #include "app_button_press.h"
 #include"sl_pwm_instances.h"
+#include "sl_btmesh_sensor_client.h"
 
-
-/// timeout for registering new devices after startup
-#define DEVICE_REGISTER_SHORT_TIMEOUT  100
-/// timeout for registering new devices after startup
-#define DEVICE_REGISTER_LONG_TIMEOUT   10000
+/*******************************************************************************
+ *******************************   DEFINES   ***********************************
+ ******************************************************************************/
 /// Length of the display name buffer
-#define NAME_BUF_LEN                   20
+#define NAME_BUF_LEN                                     20
 /// Timout for Blinking LED during provisioning
-#define APP_LED_BLINKING_TIMEOUT       250
+#define APP_LED_BLINKING_TIMEOUT                        250
 /// Callback has not parameters
-#define NO_CALLBACK_DATA               (void *)NULL
+#define NO_CALLBACK_DATA                                (void *)NULL
 /// Used button indexes
-#define BUTTON_PRESS_BUTTON_0          0
+#define BUTTON_PRESS_BUTTON_0                           0
 /// periodic timer handle
 static sl_simple_timer_t app_led_blinking_timer;
 // maximum duticycle
-#define PWM_MAX_DUTY_CYCLE             100
+#define PWM_MAX_DUTY_CYCLE                              100
 // length of unicast address
-#define LENGTH_UNICAST_ADDRESS         2
-/// confirm provision done
-//static bool init_provision_done = false;
+#define LENGTH_UNICAST_ADDRESS                          2
+/// Timout for Blinking LED during provisioning
+#define APP_LED_TURN_OFF_TIMEOUT                        6000
 
+
+/*******************************************************************************
+ ***************************  LOCAL VARIABLES   ********************************
+ ******************************************************************************/
+/// confirm provision done
+static bool init_provision_done = false;
+/// periodic timer handle
+static sl_simple_timer_t app_led_turn_off_timer;
+/// confirm led is turn off
+static bool init_turn_off_done = true;
+
+/*******************************************************************************
+ ***************************  PROTOTYPE FUNCTION  ******************************
+ ******************************************************************************/
 static void device_init_change_uuid();
 /// Handles button press and does a factory reset
 static bool handle_reset_conditions(void);
+/// Handles timer call back to turn off led
+static void app_led_turn_off_timer_cb(sl_simple_timer_t *handle, void *data);
+
+/*******************************************************************************
+ ***************************  GLOBAL FUNCTION  ********************************
+ ******************************************************************************/
+
 /**************************************************************************//**
  * Application Init.
  *****************************************************************************/
@@ -152,6 +172,20 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
     ///////////////////////////////////////////////////////////////////////////
     // -------------------------------
     // Default event handler.
+    case sl_btmesh_evt_sensor_client_status_id:
+		//start timer to turn off led when sensor server send signal
+        if (init_turn_off_done)
+        {
+            sl_simple_led_turn_on(sl_led_led0.context);
+            sl_status_t sc = sl_simple_timer_start(&app_led_turn_off_timer,
+                                                   APP_LED_TURN_OFF_TIMEOUT,
+                                                   app_led_turn_off_timer_cb,
+                                                   NO_CALLBACK_DATA,
+                                                   true);
+            init_turn_off_done = false;
+            app_assert_status_f(sc, "Failed to stop periodic timer");
+        }
+        break;
     default:
       break;
   }
@@ -186,6 +220,23 @@ static void app_led_blinking_timer_cb(sl_simple_timer_t *handle, void *data)
 {
   (void)data;
   (void)handle;
+}
+
+/***************************************************************************//**
+* periodic timer callback turn off led when sensor sever send signal
+* @param[in] handle Timer descriptor handle
+* @param[in] data Callback input arguments
+******************************************************************************/
+static void app_led_turn_off_timer_cb(sl_simple_timer_t *handle, void *data)
+{
+    (void)data;
+    (void)handle;
+    if (!init_turn_off_done)
+    {
+		// turn off led and reset timer
+        sl_simple_led_turn_off(sl_led_led0.context);
+        init_turn_off_done = true;
+    }
 }
 
 /***************************************************************************//**
