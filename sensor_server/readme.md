@@ -1,8 +1,8 @@
 # Bluetooth Mesh - SoC Sensor Server
 
-The **Bluetooth Mesh - SoC Sensor Server** example is a working example application that you can use as a template for Bluetooth Mesh Sensor Server applications.
+The **Bluetooth Mesh - SoC Sensor Server** example is a working example application you can use as a template for Bluetooth Mesh Sensor Server applications.
 
-The example demonstrates the Bluetooth Mesh **Sensor Server Model** and **Sensor Setup Server Model**. It measures temperature and people count (and also illuminance with some parts such as *Thunderboard Sense 2* and *Thunderboard EFR32BG22*) and sends the measurement data to a remote device (for example, **Bluetooth Mesh - SoC Sensor Client**). The current status is displayed on the LCD (if one is present on the mainboard) and also sent to UART. CLI commands may substitute for button presses if the mainboard has only one button available. This example requires one of the Internal Storage Bootloader (single image) variants, depending on device memory.
+The example demonstrates the Bluetooth Mesh **Sensor Server Model**. It demos for creating motion by pushing the button (code run for **BGM220 Explore kit**) and sends the signal to a remote device (for example, **Bluetooth Mesh - SoC Sensor Client**). This example requires one of the Internal Storage Bootloader (single image) variants, depending on the device's memory.
 
 ![Bluetooth Mesh sensor system - Server](readme_img7.png)
 
@@ -23,7 +23,7 @@ To add or remove features from the example, follow this process:
 
 To learn more about programming an SoC application, see [UG472: Silicon Labs Bluetooth ® Mesh Configurator User's guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug472-bluetooth-mesh-v2x-node-configuration-users-guide.pdf).
 
-- Some components are configurable, and can be customized using the Component Editor
+- Some components are configurable and can be customized using the Component Editor
 
 ![Bluetooth Mesh Components](readme_img8.png)
 
@@ -38,11 +38,7 @@ Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh M
 
 - Firmware Update Server
 - BLOB Transfer Server
-
-![Bluetooth Mesh Firmware Update Components](readme_img9.png)
-
-![Bluetooth Mesh Transfer Components](readme_img10.png)
-
+- 
 For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
 
 ## GUILINE SENSOR SERVER
@@ -52,12 +48,14 @@ To run the application, do the following:
 1. Make sure a bootloader is installed. See the Troubleshooting section.
 2. Build and flash the **Bluetooth Mesh - SoC Sensor Server** example to your device.
 3. If not run in low power mode, do step 6.
-For run an example of a Low Power Node-enabled energy-efficient Bluetooth Mesh switch application. The example need to remove LCD display and logging features:
-event logging, log, iostream usart, command line interface
-4. Delete file app_out_log.c
-5. Copy the file below into the project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h. Build and flash to the device again.
-6. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen if not run in a low-power node.
-7. Provision the device in one of three ways:
+For run an example of a Low Power Node-enabled energy-efficient Bluetooth Mesh switch application. The example needs to remove logging features: event logging, log, iostream usart, and command line interface.
+And then add features: low power node. When adding a low-power node will have some problems, you need to re-config in components: Blob transfer server and Firmware update server. You can refer config in the example **Bluetooth Mesh - SoC Switch low power node** 
+5. Delete file app_out_log.c
+6. Copy the file below into the project: app.c, app.h, sl_btmesh_set_uuid.c, sl_btmesh_set_uuid.h.
+7. If you want to change the uuid device, do this step. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
+sl_bt_provisionee_on_event(evt). And then build and flash to the device again.
+8. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen if not run in a low-power node.
+9. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
 
@@ -69,29 +67,29 @@ event logging, log, iostream usart, command line interface
 
 ![Bluetooth Mesh start screen](readme_img6.png)
 
-8. Open the app and choose the Provision Browser and tap **Scan**. The device sending unprovisioned beacons should appear, tap **PROVISION**:
+10. Open the app and choose the Provision Browser and tap **Scan**. The device sending unprovisioned beacons should appear, tap **PROVISION**:
 
 ![Bluetooth Mesh Provision Browser](readme_img2.png)
 
-9. Start provisioning using the "Continue" button:
+11. Start provisioning using the "Continue" button:
 
 ![Bluetooth Mesh Provisioning Device](readme_img3.png)
 
-10. Configure the device as "Sensor Server" (inheriting the server setup model) and select the correct group to which the messages will subscribe (Demo group).
+12. Configure the device as "Sensor Server" (inheriting the server setup model) and select the correct group to which the messages will subscribe (Demo group).
 
 ![Bluetooth Mesh Device Configuration](readme_img4.png)
 
-11. Once the node is provisioned and correctly configured, it is ready to function in your demo network.
+13. Once the node is provisioned and correctly configured, it is ready to function in your demo network.
 
 ![Sensor server with Proxy connection](readme_img5.png)
 
-12. The next step is to add a sensor client or several into your network, if it has not already been done. This is required to fully test the whole system. Read the applicable example project documentation to learn more.
+14. The next step is to add a sensor client or several into your network if it has not already been done. This is required to fully test the whole system. Read the applicable example project documentation to learn more.
 
 For more information on the example, see [AN1300: Understanding the Silicon Labs Bluetooth Mesh SDK v2.x Sensor Model Demonstration](https://www.silabs.com/documents/public/application-notes/an1300-understanding-bluetooth-mesh-sensor-model-demo-sdk-2x.pdf).
 
 The button presses in this example:
 
-- Short presses will send the People Count value public to group
+- Short presses will send the signal public to the group
 
 ## Troubleshooting
 
@@ -101,7 +99,7 @@ Note that Software Example-based projects do not include a bootloader. However, 
 - To flash a UART DFU-capable bootloader to the device, flash the **Bluetooth Mesh - NCP Empty** demo.
 - For other bootloader types, create your own bootloader project and flash it to the device before flashing your application.
 - When you flash your application image to the device, use the *.hex* or *.s37* output file. Flashing *.bin* files may overwrite (erase) the bootloader.
-- On Series 1 devices (EFR32xG1x), both first stage and second stage bootloaders have to be flashed. This can be done at once by flashing the *-combined.s37* file found in the bootloader project after building the project.
+- On Series 1 devices (EFR32xG1x), both first-stage and second-stage bootloaders have to be flashed. This can be done at once by flashing the *-combined.s37* file found in the bootloader project after building the project.
 - For more information, see [UG103.6: Bootloader Fundamentals](https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf) and [UG489: Silicon Labs Gecko Bootloader User's Guide for GSDK 4.0 and Higher](https://cn.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf).
 
 Before programming the radio board mounted on the mainboard, make sure the power supply switch the AEM position (right side) as shown below.
