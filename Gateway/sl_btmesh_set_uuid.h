@@ -9,7 +9,6 @@
 /**************************************************************************//**
  *Function set uuid for device
  *
- * @param[in] evt Event coming from the Bluetooth Mesh stack.
  *****************************************************************************/
 void sl_btmesh_set_my_uuid(void);
 

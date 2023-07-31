@@ -9,7 +9,6 @@
 #include "sl_bluetooth.h"
 #include "stdio.h"
 #include "sl_btmesh_api.h"
-
 #ifdef SL_CATALOG_APP_LOG_PRESENT
 #include "app_log.h"
 #endif // SL_CATALOG_APP_LOG_PRESENT
