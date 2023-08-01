@@ -45,7 +45,6 @@ component:
 - instance: [vcom]
   id: iostream_usart
 - {id: btmesh_provisioning_decorator}
-- {id: btmesh_friend}
 - {id: btmesh_stack}
 - {id: btmesh_stack_gatt_prov_bearer}
 - {id: bootloader_interface}
