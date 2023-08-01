@@ -144,9 +144,10 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
 
 
     case sl_bt_evt_system_boot_id:
-
-      //device_init_change_uuid();
-
+	  if(!handle_reset_conditions())
+	  {
+        device_init_change_uuid();
+	  }
       break;
     // -------------------------------
     // Default event handler.
