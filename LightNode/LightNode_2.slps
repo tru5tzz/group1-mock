@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <model:MDescriptors xmlns:model="http://www.silabs.com/ss/Studio.ecore">
-  <descriptors name="LightNode">
+  <descriptors name="LightNode_2">
     <properties key="projectCommon.sdkId" value="com.silabs.sdk.stack.super:4.3.0._217982823"/>
     <properties key="universalConfig.generationDirectory" value=""/>
     <properties key="universalConfig.toolchainCompatibility" value="iar gcc"/>

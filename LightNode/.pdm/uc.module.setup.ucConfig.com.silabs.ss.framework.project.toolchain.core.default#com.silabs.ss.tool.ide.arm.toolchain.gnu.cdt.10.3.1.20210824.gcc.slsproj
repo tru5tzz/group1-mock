@@ -29,6 +29,7 @@
     <file name="app_log_config.h" generated="true" linked="false"/>
     <file name="sl_bluetooth_connection_config.h" generated="true" linked="false"/>
     <file name="sl_debug_swo_config.h" generated="true" linked="false"/>
+    <file name="sl_btmesh_friend_config.h" generated="true" linked="false"/>
     <file name="sl_bt_dynamic_gattdb_config.h" generated="true" linked="false"/>
     <file name="sl_simple_button_config.h" generated="true" linked="false"/>
     <file name="app_assert_config.h" generated="true" linked="false"/>

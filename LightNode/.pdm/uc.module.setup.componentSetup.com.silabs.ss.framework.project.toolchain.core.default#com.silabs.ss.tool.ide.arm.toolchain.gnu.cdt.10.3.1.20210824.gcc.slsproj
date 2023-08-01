@@ -574,6 +574,10 @@
             <file name="sl_btmesh_factory_reset.c" uri="studio:/sdk/app/btmesh/common/btmesh_factory_reset/sl_btmesh_factory_reset.c"/>
             <file name="sl_btmesh_factory_reset.h" uri="studio:/sdk/app/btmesh/common/btmesh_factory_reset/sl_btmesh_factory_reset.h"/>
           </folder>
+          <folder name="btmesh_friend">
+            <file name="sl_btmesh_friend.c" uri="studio:/sdk/app/btmesh/common/btmesh_friend/sl_btmesh_friend.c"/>
+            <file name="sl_btmesh_friend.h" uri="studio:/sdk/app/btmesh/common/btmesh_friend/sl_btmesh_friend.h"/>
+          </folder>
           <folder name="btmesh_generic_base">
             <file name="sl_btmesh_generic_base.c" uri="studio:/sdk/app/btmesh/common/btmesh_generic_base/sl_btmesh_generic_base.c"/>
           </folder>
@@ -891,6 +895,7 @@
   <includePath uri="studio:/sdk/platform/bootloader/api"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_event_log"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_factory_reset"/>
+  <includePath uri="studio:/sdk/app/btmesh/common/btmesh_friend"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_lighting_server"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisionee"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisioning_decorator"/>

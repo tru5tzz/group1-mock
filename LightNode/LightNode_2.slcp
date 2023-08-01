@@ -1,6 +1,6 @@
 # Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
-project_name: LightNode
-label: LightNode
+project_name: LightNode_2
+label: LightNode_2
 description: |
   Demonstrates the bare minimum needed for a Bluetooth Mesh C application. The application starts Unprovisioned Device Beaconing after booting, and then waits to be provisioned.
 category: Bluetooth Mesh Examples
@@ -45,6 +45,7 @@ component:
 - instance: [vcom]
   id: iostream_usart
 - {id: btmesh_provisioning_decorator}
+- {id: btmesh_friend}
 - {id: btmesh_stack}
 - {id: btmesh_stack_gatt_prov_bearer}
 - {id: bootloader_interface}

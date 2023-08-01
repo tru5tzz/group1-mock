@@ -721,6 +721,16 @@
 			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_factory_reset/sl_btmesh_factory_reset.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_friend/sl_btmesh_friend.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_friend/sl_btmesh_friend.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_friend/sl_btmesh_friend.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_friend/sl_btmesh_friend.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_generic_base/sl_btmesh_generic_base.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_generic_base/sl_btmesh_generic_base.c</locationURI>
