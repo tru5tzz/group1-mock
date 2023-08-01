@@ -114,7 +114,6 @@ SL_WEAK void app_init(void)
     // Enable button presses
   app_button_press_enable();
   handle_reset_conditions();
-  sl_btmesh_node_set_proxy_service_adv_interval(160, 200);
 }
 
 /**************************************************************************//**
