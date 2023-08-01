@@ -34,8 +34,8 @@ component:
   id: simple_button
 - {id: btmesh_stack_advertiser_legacy}
 - {id: in_place_ota_dfu}
-- {id: mpu}
 - {id: bluetooth_feature_legacy_advertiser}
+- {id: mpu}
 - {id: gatt_service_device_information}
 - instance: [vcom]
   id: iostream_eusart
@@ -43,6 +43,7 @@ component:
 - {id: brd4314a}
 - {id: btmesh_proxy}
 - {id: BGM220PC22HNA}
+- {id: btmesh_lpn}
 - {id: app_button_press}
 - {id: app_log}
 - {id: btmesh_lighting_client}

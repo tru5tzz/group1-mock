@@ -20,9 +20,10 @@
     <file name="sl_device_init_lfrco_config.h" generated="true" linked="false"/>
     <file name="sl_device_init_dcdc_config.h" generated="true" linked="false"/>
     <file name="sl_bluetooth_config.h" generated="true" linked="false"/>
-    <file name="app_btmesh_util_config.h" generated="true" linked="false"/>
     <file name="sl_iostream_eusart_vcom_config.h" generated="true" linked="false"/>
+    <file name="app_btmesh_util_config.h" generated="true" linked="false"/>
     <file name="sl_board_control_config.h" generated="true" linked="false"/>
+    <file name="sl_btmesh_lpn_config.h" generated="true" linked="false"/>
     <file name="app_button_press_config.h" generated="true" linked="false"/>
     <file name="app_log_config.h" generated="true" linked="false"/>
     <file name="sl_bluetooth_connection_config.h" generated="true" linked="false"/>

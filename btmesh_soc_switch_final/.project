@@ -749,6 +749,16 @@
 			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_lighting_client/sl_btmesh_lighting_client.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_provisionee/sl_btmesh_provisionee.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_provisionee/sl_btmesh_provisionee.c</locationURI>

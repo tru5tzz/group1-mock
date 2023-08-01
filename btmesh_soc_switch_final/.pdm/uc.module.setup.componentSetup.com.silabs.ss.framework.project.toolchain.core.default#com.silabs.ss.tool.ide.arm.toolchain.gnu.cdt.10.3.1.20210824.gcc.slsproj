@@ -580,6 +580,10 @@
             <file name="sl_btmesh_lighting_client.c" uri="studio:/sdk/app/btmesh/common/btmesh_lighting_client/sl_btmesh_lighting_client.c"/>
             <file name="sl_btmesh_lighting_client.h" uri="studio:/sdk/app/btmesh/common/btmesh_lighting_client/sl_btmesh_lighting_client.h"/>
           </folder>
+          <folder name="btmesh_lpn">
+            <file name="sl_btmesh_lpn.c" uri="studio:/sdk/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.c"/>
+            <file name="sl_btmesh_lpn.h" uri="studio:/sdk/app/btmesh/common/btmesh_lpn/sl_btmesh_lpn.h"/>
+          </folder>
           <folder name="btmesh_provisionee">
             <file name="sl_btmesh_provisionee.c" uri="studio:/sdk/app/btmesh/common/btmesh_provisionee/sl_btmesh_provisionee.c"/>
             <file name="sl_btmesh_provisionee.h" uri="studio:/sdk/app/btmesh/common/btmesh_provisionee/sl_btmesh_provisionee.h"/>
@@ -885,6 +889,7 @@
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_factory_reset"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_iv_update"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_lighting_client"/>
+  <includePath uri="studio:/sdk/app/btmesh/common/btmesh_lpn"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisionee"/>
   <includePath uri="studio:/sdk/app/btmesh/common/btmesh_provisioning_decorator"/>
   <includePath uri="studio:/sdk/platform/driver/button/inc"/>

@@ -112,7 +112,8 @@ static bool handle_reset_conditions(void);
 
 static uint8_t wrap_add(int8_t a, int8_t b, uint8_t max);
 
-
+// change uuid to provisioned
+static void device_init_change_uuid();
 
 
 /**************************************************************************//**
@@ -159,6 +160,12 @@ SL_WEAK void app_process_action(void)
 void sl_bt_on_event(struct sl_bt_msg *evt)
 {
   switch (SL_BT_MSG_ID(evt->header)) {
+    case sl_bt_evt_system_boot_id:
+      if(!handle_reset_conditions())
+        {
+          device_init_change_uuid();
+        }
+      break;
       case sl_bt_evt_connection_opened_id:
         num_connections++;
         //lcd_print("connected", SL_BTMESH_WSTK_LCD_ROW_CONNECTION_CFG_VAL);
@@ -207,6 +214,8 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
     case sl_btmesh_evt_node_heartbeat_stop_id:
 
       break;
+
+    case sl_btmesh_evt_generic_client_server_status_id:
     // -------------------------------
     // Default event handler.
     default:
@@ -237,6 +246,21 @@ static void set_device_name(uuid_128 *uuid) {
    app_log_status_error_f(result,
                             "sl_bt_gatt_server_write_attribute_value() failed" APP_LOG_NL);
 
+}
+
+
+static void device_init_change_uuid() {
+  uuid_128 temp;
+  sl_status_t retval;
+  retval = sl_btmesh_node_get_uuid(&temp);
+  app_assert_status_f(retval, "Getting UUID failed:\n");
+  temp.data[0] = 0x02;
+  temp.data[1] = 0xFF;
+  temp.data[2] = 0x00;
+  temp.data[3] = 0x01;
+
+  retval = sl_btmesh_node_set_uuid(temp);
+  app_assert_status_f(retval, "Setting UUID failed\n");
 }
 
 
@@ -317,19 +341,21 @@ void app_button_press_cb(uint8_t button, uint8_t duration)
       // Handling of button press less than 0.25s
       case APP_BUTTON_PRESS_DURATION_SHORT: {
         lightness_percent = wrap_add(lightness_percent, DECREASE, MAX_PERCENT);
-        app_log("Decrease brightness 10%%" APP_LOG_NL);
+        //app_log("Decrease brightness 10%%" APP_LOG_NL);
         sl_btmesh_set_lightness(lightness_percent);
       } break;
       // Handling of button press greater than 0.25s and less than 1s
       case APP_BUTTON_PRESS_DURATION_MEDIUM: {
         lightness_percent = wrap_add(lightness_percent, INCREASE, MAX_PERCENT);
-        app_log("Increase brightness 10%%" APP_LOG_NL);
+        //app_log("Increase brightness 10%%" APP_LOG_NL);
         sl_btmesh_set_lightness(lightness_percent);
       } break;
       // Handling of button press greater than 1s and less than 5s
       case APP_BUTTON_PRESS_DURATION_LONG: {
         app_log("Toggle Led" APP_LOG_NL);
-        sl_btmesh_change_switch_position(SL_BTMESH_LIGHTING_CLIENT_TOGGLE);
+        if ( lightness_percent != 0 ) lightness_percent = 0;
+        else lightness_percent = 100;
+        sl_btmesh_set_lightness(lightness_percent);
       } break;
       // Handling of button press greater than 5s
 //      case APP_BUTTON_PRESS_DURATION_VERYLONG: {
