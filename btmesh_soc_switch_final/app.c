@@ -343,7 +343,7 @@ void app_button_press_cb(uint8_t button, uint8_t duration)
 {
 #if SL_SIMPLE_BUTTON_COUNT == 1
   if (button == BUTTON_PRESS_BUTTON_0) {
-    sl_btmesh_change_switch_position(SL_BTMESH_LIGHTING_CLIENT_OFF);
+//    sl_btmesh_change_switch_position(SL_BTMESH_LIGHTING_CLIENT_OFF);
     switch (duration) {
       // Handling of button press less than 0.25s
       case APP_BUTTON_PRESS_DURATION_SHORT: {
