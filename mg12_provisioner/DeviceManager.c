@@ -5,7 +5,7 @@
 #include "app_log.h"
 #include "sl_btmesh_api.h"
 
-#define MAX_PRESENT_DEVICE_NUMBER 24
+#define MAX_PRESENT_DEVICE_NUMBER 12
 
 #define DEVICE_FAMILY_CODE 0x02FF
 

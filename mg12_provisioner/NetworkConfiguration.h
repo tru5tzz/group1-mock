@@ -13,4 +13,6 @@
 #define LIGHT_MODEL_ID 0x1000   // Generic On/Off Server
 #define SWITCH_MODEL_ID 0x1001  // Generic On/Off Client
 
+#define LIGHTNESS_SEVER_MODEL 0x1300 // Light lightness server
+
 #endif  // __NET_CONFIG__

@@ -39,6 +39,7 @@ SL_WEAK void app_init(void) {
   sl_sleeptimer_delay_millisecond(1);
 
   device_manager_init();
+  app_button_press_enable();
 }
 
 /**
@@ -130,6 +131,7 @@ void sl_bt_on_event(struct sl_bt_msg *evt) {
 static uint16_t provisionee_addr;
 static uint16_t target_group_address;
 static bd_addr provisioning_dev_address;
+static uuid_128 device_uuid;
 static uint8_t device_type = TARGET_DEVICE_TYPE_NODE;
 /**
  * Bluetooth Mesh stack event handler.
@@ -139,7 +141,6 @@ static uint8_t device_type = TARGET_DEVICE_TYPE_NODE;
  *****************************************************************************/
 void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
   uint16_t result = 0;
-  uuid_128 provisionee_uuid;
   sl_status_t sc;
 
   switch (SL_BT_MSG_ID(evt->header)) {
@@ -152,49 +153,19 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
       if (sc != SL_STATUS_OK) {
         /* Something went wrong */
         app_log("sl_btmesh_prov_create_network: failed 0x%.2lx\r\n", sc);
-        if (sc == SL_STATUS_BT_MESH_ALREADY_EXISTS) {
-          app_log("Key already exists\n");
-        }
       } else {
         app_log("Success, netkey id = %x\r\n", NETWORK_ID);
       }
 
       size_t max_application_key_size = 16;
-      size_t application_key_len = 16;
-      uint8_t application_key[16];
       sc = sl_btmesh_prov_create_appkey(NETWORK_ID, APPKEY_INDEX, 0, NULL,
-                                        max_application_key_size,
-                                        &application_key_len, application_key);
+                                        max_application_key_size, NULL, NULL);
 
-      if (sc != SL_STATUS_OK) {
-        /* Something went wrong */
-        app_log("sl_btmesh_prov_create_appkey: failed 0x%.2lx\r\n", sc);
-      } else {
-        app_log("Success, appkey id = %x with value of ", APPKEY_INDEX);
-        for (uint8_t i = 0; i < application_key_len; i++) {
-          app_log("%x", application_key[i]);
-          if (i != application_key_len) {
-            app_log(":");
-          } else {
-            app_log("\n");
-          }
-        }
-      }
-
-      /* Networks  */
-      app_log("networks: 0x%x ", evt->data.evt_prov_initialized.networks);
-
-      /* address */
-      app_log("address: 0x%x ", evt->data.evt_prov_initialized.address);
-
-      /* ivi  */
-      app_log("ivi: 0x%lx", evt->data.evt_prov_initialized.iv_index);
-      app_log("\r\n");
+      if(sc > 0) app_log("Failed to create a new network key\n");
 
       sl_btmesh_generic_client_init();
 
       result = sl_btmesh_prov_scan_unprov_beacons();
-      app_button_press_enable();
     } break;
     case sl_btmesh_evt_prov_initialization_failed_id:
       app_log("failed: 0x%x ", evt->data.evt_prov_initialization_failed.result);
@@ -202,20 +173,25 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
     case sl_btmesh_evt_prov_unprov_beacon_id:
       /* PB-ADV only */
       if (0 == evt->data.evt_prov_unprov_beacon.bearer) {
-        uuid_128 temp_id = evt->data.evt_prov_unprov_beacon.uuid;
-        bd_addr temp_add = evt->data.evt_prov_unprov_beacon.address;
+        device_uuid = evt->data.evt_prov_unprov_beacon.uuid;
+        provisioning_dev_address = evt->data.evt_prov_unprov_beacon.address;
         /* fill up btmesh device struct */
-        if ((sl_btmesh_prov_get_ddb_entry(temp_id, NULL, NULL, NULL, NULL) !=
-             0)) {
+        if ((sl_btmesh_prov_get_ddb_entry(device_uuid, NULL, NULL, NULL,
+                                          NULL) != 0)) {
           /* Device is not present */
-          if (device_manager_add_device(&temp_id, &temp_add) == 0) {
+          if (device_manager_add_device(&device_uuid,
+                                        &provisioning_dev_address) == 0) {
             app_log("Found new device\n");
-            app_log("Address: %x:%x:%x:%x:%x:%x\n", temp_add.addr[5],
-                    temp_add.addr[4], temp_add.addr[3], temp_add.addr[2],
-                    temp_add.addr[1], temp_add.addr[0]);
+            app_log("Address: %x:%x:%x:%x:%x:%x\n",
+                    provisioning_dev_address.addr[5],
+                    provisioning_dev_address.addr[4],
+                    provisioning_dev_address.addr[3],
+                    provisioning_dev_address.addr[2],
+                    provisioning_dev_address.addr[1],
+                    provisioning_dev_address.addr[0]);
             app_log("UUID: ");
             for (uint8_t i = 0; i < BLE_MESH_UUID_LEN_BYTE; i++) {
-              app_log("%x", temp_id.data[i]);
+              app_log("%x", device_uuid.data[i]);
             }
             app_log("\n");
           }
@@ -228,14 +204,9 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
       break;
     case sl_btmesh_evt_prov_device_provisioned_id:
       provisionee_addr = evt->data.evt_prov_device_provisioned.address;
-      provisionee_uuid = evt->data.evt_prov_device_provisioned.uuid;
+      device_uuid = evt->data.evt_prov_device_provisioned.uuid;
       app_log("Node successfully provisioned. Address: %4.4x, ",
               provisionee_addr);
-
-      app_log("uuid 0x");
-      for (uint8_t i = 0; i < BLE_MESH_UUID_LEN_BYTE; i++)
-        app_log("%02X", provisionee_uuid.data[i]);
-      app_log("\r\n");
 
       // Delete the device from the DeviceManager Table
       sc = device_manager_remove_device(&provisioning_dev_address);
@@ -249,11 +220,13 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
 
       sc = sl_btmesh_config_client_add_appkey(NETWORK_ID, provisionee_addr,
                                               APPKEY_INDEX, NETWORK_ID, NULL);
+      sl_status_print(sc);
       if (sc != SL_STATUS_OK) {
         app_log(
             "sl_btmesh_config_client_add_appkey failed with result 0x%lX (%ld) "
             "addr %x\r\n",
             sc, sc, provisionee_addr);
+
       }
       break;
 
@@ -262,12 +235,20 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
       result = evt->data.evt_config_client_appkey_status.result;
       if (result == SL_STATUS_OK) {
         app_log(" appkey added\r\n");
+      } else {
+        app_log("Failed to add key to device, code %x\n", result);
+        // TODO Retry adding key to the node
       }
 
       // Move to configuration step
-      sc = device_configuration_config_session(provisionee_addr,
-                                               target_group_address,
-                                               device_type);
+      if (device_uuid.data[3] == 0x02) {
+        app_log("Gateway\n");
+        device_type = TARGET_DEVICE_TYPE_GATEWAY;
+      } else if (device_uuid.data[3] == 0x01) {
+        device_type = TARGET_DEVICE_TYPE_NODE;
+      }
+      sc = device_configuration_config_session(
+          provisionee_addr, target_group_address, device_type, device_uuid);
       app_assert_status_f(sc, "device_configuration_config_session\n");
       break;
     // -------------------------------
@@ -306,18 +287,22 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt) {
 static uint8_t recursive = 0;
 void provisionBLEMeshStack_app() {
   sl_status_t sc;
-  uuid_128 temp_id;
-  bd_addr temp_add;
 
   status_indicator_on_provisioning();
 
   // FIXME - When there is no device left this function below should return
   // value other than 0
-  if (device_manager_get_next_device(&temp_id, &temp_add) == 0) {
+  if (device_manager_get_next_device(&device_uuid, &provisioning_dev_address) ==
+      0) {
+
+    app_log("Starting to prov device with id %x:%x and ble address of %x:%x\n",
+                              device_uuid.data[14],
+                              device_uuid.data[15],
+                              provisioning_dev_address.addr[5],
+                              provisioning_dev_address.addr[4]);
     /* provisioning using ADV bearer (this is the default) */
-    provisioning_dev_address = temp_add;
-    sl_btmesh_prov_create_provisioning_session(NETWORK_ID, temp_id, 0);
-    sc = sl_btmesh_prov_provision_adv_device(temp_id);
+    sl_btmesh_prov_create_provisioning_session(NETWORK_ID, device_uuid, 0);
+    sc = sl_btmesh_prov_provision_adv_device(device_uuid);
     if (sc == SL_STATUS_OK) {
       app_log("Provisioning request sent\n");
     } else {
@@ -344,9 +329,9 @@ void double_tap_timer_on_timeout(sl_sleeptimer_timer_handle_t *timer,
 
 void app_button_press_cb(uint8_t button, uint8_t duration) {
   bool sleeptimer_running = false;
-  app_log("Button %d pressed\n", button);
   switch (duration) {
     case APP_BUTTON_PRESS_DURATION_SHORT:
+      app_log("Provision one device\n");
       if (button == 0) {
         target_group_address = LIGHT_GROUP_1;
       } else if (button == 1) {
@@ -355,6 +340,7 @@ void app_button_press_cb(uint8_t button, uint8_t duration) {
       provisionBLEMeshStack_app();
       break;
     case APP_BUTTON_PRESS_DURATION_LONG:
+      app_log("Provision all devices in the table\n");
       if (button == 0) {
         target_group_address = LIGHT_GROUP_1;
       } else if (button == 1) {

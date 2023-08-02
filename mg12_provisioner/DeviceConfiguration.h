@@ -6,13 +6,13 @@
 // #include "bg_types.h"
 
 // max number of SIG models in the DCD
-#define MAX_SIG_MODELS 25
+#define MAX_SIG_MODELS 10
 
 // max number of vendor models in the DCD
 #define MAX_VENDOR_MODELS 4
 
 // The max number of elements each device should support
-#define MAX_ELEMS_PER_DEV 3
+#define MAX_ELEMS_PER_DEV 2
 
 #define TARGET_DEVICE_TYPE_NODE 0x01
 #define TARGET_DEVICE_TYPE_GATEWAY 0x02
@@ -53,9 +53,10 @@ void DCD_decode(void);
 
 void DCD_decode_element(tsDCD_Elem *pElem, tsDCD_ElemContent *pDest);
 
-uint8_t device_configuration_config_session(uint16_t target,
+uint8_t device_configuration_config_session(uint16_t target_device,
                                             uint16_t target_group,
-                                            uint8_t device_type);
+                                            uint8_t device_type,
+                                            uuid_128 dev_uuid);
 
 void device_config_handle_mesh_evt(sl_btmesh_msg_t *evt);
 
