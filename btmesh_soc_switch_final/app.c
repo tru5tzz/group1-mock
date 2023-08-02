@@ -201,18 +201,24 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
-
     case sl_btmesh_evt_node_heartbeat_id:
 
-      app_log("Heartbeat message from %d to %d" NL, evt->data.evt_node_heartbeat.src_addr, evt->data.evt_node_heartbeat.dst_addr);
+      app_log("Heartbeat message from light node (address %d ) to address %d (%d hops)" NL, evt->data.evt_node_heartbeat.src_addr,
+                                                              evt->data.evt_node_heartbeat.dst_addr,
+                                                              evt->data.evt_node_heartbeat.hops);
 
       break;
 
     case sl_btmesh_evt_node_heartbeat_start_id:
+      app_log("Start send Heartbeat message from light node (address %d ) to address %d (period %d s)" NL, evt->data.evt_node_heartbeat_start.src_addr,
+                                                                    evt->data.evt_node_heartbeat_start.dst_addr,
+                                                                    evt->data.evt_node_heartbeat_start.period_sec);
 
       break;
     case sl_btmesh_evt_node_heartbeat_stop_id:
 
+      app_log("Stop send Heartbeat message from light node (address %d ) to address %d" NL, evt->data.evt_node_heartbeat_stop.src_addr,
+                                                                          evt->data.evt_node_heartbeat_stop.dst_addr);
       break;
 
     case sl_btmesh_evt_generic_client_server_status_id:
@@ -337,6 +343,7 @@ void app_button_press_cb(uint8_t button, uint8_t duration)
 {
 #if SL_SIMPLE_BUTTON_COUNT == 1
   if (button == BUTTON_PRESS_BUTTON_0) {
+    sl_btmesh_change_switch_position(SL_BTMESH_LIGHTING_CLIENT_OFF);
     switch (duration) {
       // Handling of button press less than 0.25s
       case APP_BUTTON_PRESS_DURATION_SHORT: {

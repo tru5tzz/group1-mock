@@ -119,7 +119,7 @@
 // <q SL_BTMESH_GENERIC_LEVEL_CLIENT_INIT_CFG_VAL> Generic Level Client
 // <i> Default: 0
 // <i> Initialize Generic Level Client.
-#define SL_BTMESH_GENERIC_LEVEL_CLIENT_INIT_CFG_VAL                    0
+#define SL_BTMESH_GENERIC_LEVEL_CLIENT_INIT_CFG_VAL                    1
 
 // <q SL_BTMESH_GENERIC_DEFAULT_TRANSITION_TIME_CLIENT_INIT_CFG_VAL> Generic Default Transition Time Client
 // <i> Default: 0

@@ -46,7 +46,7 @@
 // <i> Poll timeout in milliseconds, which is the longest time that LPN sleeps in between querying its friend
 // for queued messages. Long poll timeout allows the LPN to sleep for longer periods, at the expense of increased
 // latency for receiving messages. Note that the given value is rounded up to the nearest 100 ms
-#define SL_BTMESH_LPN_POLL_TIMEOUT_CFG_VAL   120000
+#define SL_BTMESH_LPN_POLL_TIMEOUT_CFG_VAL   (5000)
 
 // <o SL_BTMESH_LPN_RECEIVE_DELAY_CFG_VAL> Receive delay in milliseconds <10-255>
 // <i> Default: 50
@@ -96,7 +96,7 @@
 // <o SL_BTMESH_LPN_FRIEND_FIND_TIMEOUT_CFG_VAL> Timeout between retries to find a friend
 // <i> Default: 2000
 // <i> Timeout between retries to find a friend
-#define SL_BTMESH_LPN_FRIEND_FIND_TIMEOUT_CFG_VAL   2000
+#define SL_BTMESH_LPN_FRIEND_FIND_TIMEOUT_CFG_VAL   (2000)
 
 // <e SL_BTMESH_LPN_LOGGING_CFG_VAL> Enable Logging
 // <i> Default: 1

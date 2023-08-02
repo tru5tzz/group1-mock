@@ -15,14 +15,6 @@
           {
             "mid": "0x0002",
             "name": "Health Server"
-          },
-          {
-            "mid": "0x1001",
-            "name": "Generic OnOff Client"
-          },
-          {
-            "mid": "0x1302",
-            "name": "Light Lightness Client"
           }
         ],
         "vendor_models": []
