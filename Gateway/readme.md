@@ -27,8 +27,21 @@ To learn more about programming an SoC application, see [UG472: Silicon Labs Blu
 - Implement additional application logic
 
 [UG295: Silicon Labs Bluetooth ® Mesh C Application Developer's Guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug295-bluetooth-mesh-dev-guide.pdf) gives code-level information on the stack and the common pitfalls to avoid.
+## Device Firmware Update
 
-## GUILINE - GATEWAY Application
+Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh Model specification v1.1 that provides a standard way to update device firmware over a Bluetooth mesh network. The example has the Updating node functionality enabled by default that is fulfilled by installing the Firmware Update and BLOB Transfer model components:
+
+- Firmware Update Server
+- BLOB Transfer Server
+
+For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
+## UPDATE OTA SECURE
+For updated OTA Secure follow step guidelines below:
+1. Need to add features: in-place OTA DFU. And uninstall DFU updating node
+2. Requires flash Bootloader - SoC Bluetooth AppLoader OTA DFU
+3. Step Next follow the document: https://www.silabs.com/documents/public/application-notes/an1086-gecko-bootloader-bluetooth.pdf
+   
+## GUIDELINE - GATEWAY Application
 
 To make the gateway node the application, do the following:
 
@@ -42,8 +55,7 @@ To make the gateway node the application, do the following:
  app_out_log.c, app_out_log.h,
  gateway_define.h
  sl_btmesh_uuid.c,sl_btmesh_uuid.h
-7. If you want to change the uuid device, do this step. In file sl_bluetooth.c: add function sl_btmesh_set_my_uuid(evt) before function
-sl_bt_provisionee_on_event(evt). And then build and flash to the device again.
+7.  Build and flash to the device again.
 8. Provision the device in one of three ways:
 
    - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)

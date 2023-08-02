@@ -74,6 +74,8 @@ static sl_simple_timer_t app_led_blinking_timer;
 
 /// Handles button press and does a factory reset
 static bool handle_reset_conditions(void);
+/// Handles changge UUID
+static void device_init_change_uuid();
 /**************************************************************************//**
  * Application Init.
  *****************************************************************************/
@@ -114,12 +116,18 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
+    case sl_bt_evt_system_boot_id:
+          if(!handle_reset_conditions())
+            {
+              device_init_change_uuid();
+            }
+          break;
     case sl_bt_evt_connection_opened_id:
           app_log("Connected" APP_LOG_NL);
           break;
-   case sl_bt_evt_connection_closed_id:
+    case sl_bt_evt_connection_closed_id:
          app_log("Disconnected" APP_LOG_NL);
-         break;
+          break;
     // -------------------------------
     // Default event handler.
     default:
@@ -136,6 +144,7 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
 void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
 {
   switch (SL_BT_MSG_ID(evt->header)) {
+
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
@@ -190,7 +199,7 @@ static void set_device_name(uuid_128 *uuid)
     // Create unique device name using the last two bytes of the device UUID
     snprintf(name,
              NAME_BUF_LEN,
-             "sensor client %02x%02x",
+             "lightnode %02x%02x",
              uuid->data[14],
              uuid->data[15]);
     app_log("Device name: '%s'" APP_LOG_NL, name);
@@ -268,5 +277,21 @@ void app_button_press_cb(uint8_t button, uint8_t duration)
 {
   (void)button;
   (void)duration;
+}
+
+/***************************************************************************//**
+ * Change UUID
+ ******************************************************************************/
+static void device_init_change_uuid() {
+  uuid_128 temp;
+  sl_status_t retval;
+  retval = sl_btmesh_node_get_uuid(&temp);
+  app_assert_status_f(retval, "Getting UUID failed:\n");
+  temp.data[0] = 0x02;
+  temp.data[1] = 0xFF;
+  temp.data[2] = 0x00;
+  temp.data[3] = 0x01;
+  retval = sl_btmesh_node_set_uuid(temp);
+  app_assert_status_f(retval, "Setting UUID failed\n");
 }
 

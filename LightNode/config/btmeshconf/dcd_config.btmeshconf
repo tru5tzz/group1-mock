@@ -19,6 +19,10 @@
           {
             "mid": "0x1002",
             "name": "Generic Level Server"
+          },
+          {
+            "mid": "0x1102",
+            "name": "Sensor Client"
           }
         ],
         "vendor_models": []

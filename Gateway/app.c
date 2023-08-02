@@ -56,6 +56,7 @@
 
 #include "app_out_log.h"
 #include "gateway_define.h"
+#include "sl_btmesh_set_uuid.h"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
@@ -491,7 +492,12 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
         ///////////////////////////////////////////////////////////////////////////
         // Add additional event handlers here as your application requires!      //
         ///////////////////////////////////////////////////////////////////////////
-
+    case sl_bt_evt_system_boot_id:
+        if(!handle_reset_conditions())
+        {
+            sl_btmesh_set_my_uuid();
+        }
+        break;
     case sl_bt_evt_connection_opened_id:
         app_log("Connected" APP_LOG_NL);
         break;

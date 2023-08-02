@@ -148,7 +148,12 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
         ///////////////////////////////////////////////////////////////////////////
         // Add additional event handlers here as your application requires!      //
         ///////////////////////////////////////////////////////////////////////////
-
+    case sl_bt_evt_system_boot_id:
+        if(!handle_reset_conditions())
+        {
+            sl_btmesh_set_my_uuid();
+        }
+        break;
     case sl_bt_evt_connection_opened_id:
         app_log("Connected" APP_LOG_NL);
         break;
@@ -178,6 +183,7 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
     ///////////////////////////////////////////////////////////////////////////
     ///
     case sl_btmesh_evt_sensor_client_status_id:
+		//start timer to turn off led when sensor server send signal
         if (init_turn_off_done)
         {
             sl_simple_led_turn_on(sl_led_led0.context);
@@ -248,6 +254,7 @@ static void app_led_turn_off_timer_cb(sl_simple_timer_t *handle, void *data)
     (void)handle;
     if (!init_turn_off_done)
     {
+		// turn off led and reset timer
         sl_simple_led_turn_off(sl_led_led0.context);
         init_turn_off_done = true;
     }

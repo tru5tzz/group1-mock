@@ -436,6 +436,11 @@
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/api/sl_btmesh.xapi</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_apploader_util.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_apploader_util.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_bgapi.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_bgapi.h</locationURI>
@@ -496,6 +501,11 @@
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_compatibility_macros.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_device_properties.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_device_properties.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_generic_model_capi_types.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_generic_model_capi_types.h</locationURI>
@@ -524,6 +534,16 @@
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_provisioning_records.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_provisioning_records.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_sensor.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_sensor.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_sensor_model_capi_types.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sl_btmesh_sensor_model_capi_types.h</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/inc/sl_btmesh_serdeser.h</name>
@@ -591,6 +611,11 @@
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/inc/sli_bt_sync_config.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sl_apploader_util_s2.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/src/sl_apploader_util_s2.c</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sl_bt_stack_init.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/src/sl_bt_stack_init.c</locationURI>
@@ -599,6 +624,11 @@
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sl_btmesh_lib.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/src/sl_btmesh_lib.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sl_btmesh_sensor.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/src/sl_btmesh_sensor.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sl_btmesh_serdeser.c</name>
@@ -649,6 +679,16 @@
 			<name>gecko_sdk_4.3.0/protocol/bluetooth/src/sli_bt_sync_config.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/bluetooth/src/sli_bt_sync_config.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/bluetooth/common/in_place_ota_dfu/sl_bt_in_place_ota_dfu.h</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.3.0/app/btmesh/common/app_btmesh_util/app_btmesh_util.c</name>
@@ -724,6 +764,16 @@
 			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_provisioning_decorator/sl_btmesh_provisioning_decorator.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_provisioning_decorator/sl_btmesh_provisioning_decorator.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.3.0/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/app/btmesh/common/btmesh_sensor_client/sl_btmesh_sensor_client.h</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.3.0/app/common/util/app_assert/app_assert.h</name>
