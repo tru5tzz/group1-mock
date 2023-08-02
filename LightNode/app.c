@@ -64,18 +64,28 @@
 #define NO_CALLBACK_DATA               (void *)NULL
 /// Used button indexes
 #define BUTTON_PRESS_BUTTON_0          0
-/// periodic timer handle
-static sl_simple_timer_t app_led_blinking_timer;
 // maximum duticycle
 #define PWM_MAX_DUTY_CYCLE             100
+/// Timout for Blinking LED during provisioning
+#define APP_LED_TURN_OFF_TIMEOUT       6000
 
+
+/// periodic timer handle
+static sl_simple_timer_t app_led_blinking_timer;
+/// periodic timer handle
+static sl_simple_timer_t app_led_turn_off_timer;
 /// confirm provision done
 //static bool init_provision_done = false;
+/// confirm led is turn off
+static bool init_turn_off_done = true;
 
 /// Handles button press and does a factory reset
 static bool handle_reset_conditions(void);
 /// Handles changge UUID
 static void device_init_change_uuid();
+/// Handles timer call back to turn off led
+static void app_led_turn_off_timer_cb(sl_simple_timer_t *handle, void *data);
+
 /**************************************************************************//**
  * Application Init.
  *****************************************************************************/
@@ -143,17 +153,51 @@ void sl_bt_on_event(struct sl_bt_msg *evt)
  *****************************************************************************/
 void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
 {
+  app_log("evt_btmesh: %x\n",evt->header);
   switch (SL_BT_MSG_ID(evt->header)) {
 
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
+    case sl_btmesh_evt_sensor_client_status_id:
+        //start timer to turn off led when sensor server send signal
+            if (init_turn_off_done)
+            {
+                sl_pwm_set_duty_cycle(&sl_pwm_led0, 100);
+                sl_status_t sc = sl_simple_timer_start(&app_led_turn_off_timer,
+                                                       APP_LED_TURN_OFF_TIMEOUT,
+                                                       app_led_turn_off_timer_cb,
+                                                       NO_CALLBACK_DATA,
+                                                       true);
+                init_turn_off_done = false;
+                app_assert_status_f(sc, "Failed to stop periodic timer");
+            }
+            break;
     // -------------------------------
     // Default event handler.
+
     default:
       break;
   }
 }
+
+/***************************************************************************//**
+* periodic timer callback turn off led when sensor sever send signal
+* @param[in] handle Timer descriptor handle
+* @param[in] data Callback input arguments
+******************************************************************************/
+static void app_led_turn_off_timer_cb(sl_simple_timer_t *handle, void *data)
+{
+    (void)data;
+    (void)handle;
+    if (!init_turn_off_done)
+    {
+    // turn off led and reset timer
+        sl_pwm_set_duty_cycle(&sl_pwm_led0, 0);
+        init_turn_off_done = true;
+    }
+}
+
 
 /***************************************************************************//**
  * Handles button press and does a factory reset

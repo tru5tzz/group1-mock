@@ -47,17 +47,17 @@
 // <e SL_BTMESH_GENERIC_BASE_SERVER_CFG_VAL> Enable Generic Server Models
 // <i> Default: 0
 // <i> Enable Generic Server functionality.
-#define SL_BTMESH_GENERIC_BASE_SERVER_CFG_VAL                          0
+#define SL_BTMESH_GENERIC_BASE_SERVER_CFG_VAL                          1
 
 // <q SL_BTMESH_GENERIC_ON_OFF_SERVER_INIT_CFG_VAL> Generic On/Off Server
 // <i> Default: 0
 // <i> Initialize Generic On/Off Server.
-#define SL_BTMESH_GENERIC_ON_OFF_SERVER_INIT_CFG_VAL                   0
+#define SL_BTMESH_GENERIC_ON_OFF_SERVER_INIT_CFG_VAL                   1
 
 // <q SL_BTMESH_GENERIC_LEVEL_SERVER_INIT_CFG_VAL> Generic Level Server
 // <i> Default: 0
 // <i> Initialize Generic Level Server.
-#define SL_BTMESH_GENERIC_LEVEL_SERVER_INIT_CFG_VAL                    0
+#define SL_BTMESH_GENERIC_LEVEL_SERVER_INIT_CFG_VAL                    1
 
 // <q SL_BTMESH_GENERIC_DEFAULT_TRANSITION_TIME_SERVER_INIT_CFG_VAL> Generic Default Transition Time Server
 // <i> Default: 0

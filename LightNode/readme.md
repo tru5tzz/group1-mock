@@ -1,21 +1,29 @@
-# Bluetooth Mesh - SoC Empty
+# Bluetooth Mesh - SoC Light
 
-This example demonstrates the bare minimum needed for a Bluetooth mesh C application that supports Over-the-Air Device Firmware Upgrading (OTA DFU). The application starts Unprovisioned Device Beaconing after boot, and waits to be provisioned to a Mesh Network. This example can be used as a starting point for an SoC project and it can be customized by adding new components using the Project Configurator or by modifying the application (*app.c*). This example requires one of the Internal Storage Bootloader (single image) variants, depending on device memory.
+The **Bluetooth Mesh - SoC Light** example is a working example application that you can use as a template for Bluetooth Mesh Light applications.
+
+The example is an out-of-the-box Software Demo where the LEDs of the device can be controlled by button presses on another device (for example **Bluetooth Mesh - SoC Switch**). The LEDs can be switched on and off can also be set. The example is based on the Bluetooth Mesh Generic On/Off Model, the Light Lightness Model. This example requires OTA DFU to update firmware for device.
 
 ## Getting Started
 
 To learn Bluetooth mesh technology basics, see [Bluetooth Mesh Network - An Introduction for Developers](https://www.bluetooth.com/wp-content/uploads/2019/03/Mesh-Technology-Overview.pdf).
 
-To get started with Silicon Labs Bluetooth Mesh and Simplicity Studio, see [QSG176: Bluetooth Mesh SDK v2.x Quick Start Guide](https://www.silabs.com/documents/public/quick-start-guides/qsg176-bluetooth-mesh-sdk-v2x-quick-start-guide.pdf).
+To get started with Bluetooth Mesh and Simplicity Studio, see [QSG176: Bluetooth Mesh SDK v2.x Quick Start Guide](https://www.silabs.com/documents/public/quick-start-guides/qsg176-bluetooth-mesh-sdk-v2x-quick-start-guide.pdf).
 
-The term SoC stands for "System on Chip". In the SoC model the entire system (stack and application) resides on a single chip, whereas in the NCP model the stack processing is done in a separate coprocessor that interacts with the application’s microcontroller through an external serial interface.
+The term SoC stands for "System on Chip", meaning that this is a standalone application that runs on the EFR32/BGM and does not require any external MCU or other active components to operate.
 
-This example is an (almost) empty project that has only the bare minimum with Proxy and Relay features included to make a working Bluetooth Mesh application.
+This is an example of a Bluetooth Mesh light application. It demonstrates how to control a light source, an LED mounted on a mainboard and a radio board or similar hardware, connected to a Bluetooth Mesh network. The light source lightness can be controlled with a light client, e.g. another radio board running the **Bluetooth Mesh - SoC Switch** application, or with **Bluetooth Mesh** smartphone application.
+
+The LED light can be controlled in many ways using different models:
+
+- **Generic OnOff Server** model can turn the light on and off
+- **Generic Level Server** model can control the light brightness
+- **Light Lightness Server** model can control the light Lightness
 
 To add or remove features from the example, follow this process:
 
 - Add model and feature components to your project
-- Optionally configure your Mesh node through the "Bluetooth Mesh Configurator". It is configured to have only one element supporting a minimal set of models.
+- Optionally configure your Mesh node through the "Bluetooth Mesh Configurator"
 
 ![Bluetooth Mesh Configurator](readme_img1.png)
 
@@ -23,45 +31,64 @@ To learn more about programming an SoC application, see [UG472: Silicon Labs Blu
 
 - Some components are configurable, and can be customized using the Component Editor
 
-![Bluetooth Mesh Components](readme_img5.png)
+![Bluetooth Mesh Components](readme_img8.png)
 
 - Respond to the events raised by the Bluetooth stack
 - Implement additional application logic
 
 [UG295: Silicon Labs Bluetooth ® Mesh C Application Developer's Guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug295-bluetooth-mesh-dev-guide.pdf) gives code-level information on the stack and the common pitfalls to avoid.
 
-## Responding to Bluetooth Events
+## Device Firmware Update
 
-Just like in the Bluetooth Low Energy SDK, a Mesh application is event-driven. The Bluetooth Mesh stack generates events when a remote device connects or disconnects, for example, or when it publishes a message. While it is not necessary to react to all events, the ones requiring action should be handled by the application in the `sl_btmesh_on_event()` function. The prototype of this function is implemented in *app.c*. To handle more events, the switch-case statement of this function is to be extended. For the list of Bluetooth Mesh events, see the HTML documentation present in the Simplicity Studio installation directory:
+Device Firmware Update (DFU) is a new feature introduced in the Bluetooth Mesh Model specification v1.1 that provides a standard way to update device firmware over a Bluetooth mesh network. The example has the Updating node functionality enabled by default that is fulfilled by installing the Firmware Update and BLOB Transfer model components:
 
-* <Simplicity-Studio-installation-directory\offline\com.silabs.sdk.stack.super_4.0.1\app\btmesh\documentation<SDK-installation-location>/app/btmesh/documentation/API_BLUETOOTH_MESH_HTML
+- Firmware Update Server
+- BLOB Transfer Server
 
-## Implementing Application Logic
+![Bluetooth Mesh Firmware Update Components](readme_img9.png)
 
-Additional application logic has to be implemented in the `app_init()` and `app_process_action()` functions. Find the definitions of these functions in *app.c*. The `app_init()` function is called once when the device is booted, and `app_process_action()` is called repeatedly in a while(1) loop. For example, you can poll peripherals in this function.
+![Bluetooth Mesh Transfer Components](readme_img10.png)
 
-## Features Already Added to Bluetooth Mesh - SoC Empty Application
+For more information on the DFU examples, see **AN1370: Bluetooth® Mesh Device Firmware Update Example Walkthrough**. To learn the basics of the Bluetooth Mesh Device Firmware Update specification, see **AN1319: Bluetooth® Mesh Device Firmware Update**.
 
-The **Bluetooth Mesh - SoC Empty** application is ***almost*** empty. It implements a basic application to demonstrate how to emit unprovisioned beacons on both the advertising and GATT bearer.
+## Testing the Bluetooth Mesh - SoC Light Application
 
-## Testing the Bluetooth Mesh - SoC Empty Application
+To test the application, do the following:
 
-As described above, an empty example does nothing except broadcast unprovisioned beacons. To test this feature, do the following:
+1. Make sure a bootloader is installed. See the Troubleshooting section.
+2. Build and flash the **Bluetooth Mesh - SoC Light** example to your device.
+3. Reset the device by pressing and releasing the reset button on the mainboard while pressing BTN0. The message "Factory reset" should appear on the LCD screen.
+4. Provision the device in one of three ways:
 
-1. Clear the NVM Mesh settings, for example by performing an Erase Chip with Simplicity Commander, since the example has no button control. See [UG162: Simplicity Commander Reference Guide](https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf) for more information.
-2. Make sure a bootloader is installed. See the Troubleshooting section.
-3. Build and flash the **Bluetooth Mesh - SoC Empty** example to your device. The flashing can be done, for example, using the Simplicity Studio internal **Flash Programmer** or external **Simplicity Commander** tools.
-4. Download the Silicon Labs **Bluetooth Mesh** smartphone application available on [iOS](https://apps.apple.com/us/app/bluetooth-mesh-by-silicon-labs/id1411352948) and [Android](https://play.google.com/store/apps/details?id=com.siliconlabs.bluetoothmesh). Make sure to reset the local database by pressing the "Reset local database" button in the menu "More".
+   - NCP Host provisioner examples, see for example an SDK folder `app/btmesh/example_host/btmesh_host_provisioner` or [github](https://github.com/SiliconLabs/bluetooth_mesh_stack_features/tree/master/provisioning)
 
-![Bluetooth Mesh start screen](readme_img4.png)
+   - NCP Commander with NCP target device, see [Bluetooth NCP Commander guide](https://docs.silabs.com/simplicity-studio-5-users-guide/latest/ss-5-users-guide-tools-bluetooth-ncp-commander) or [AN1259: Using the v3.x Silicon Labs Bluetooth Stack in Network Co-Processor Mode](https://www.silabs.com/documents/public/application-notes/an1259-bt-ncp-mode-sdk-v3x.pdf)
 
-5. Open the app, choose the Provision Browser, and tap **Scan**.
+   - For Mobile Phone use, see the [QSG176: Bluetooth Mesh SDK v2.x Quick-Start Guide](https://www.silabs.com/documents/public/quick-start-guides/qsg176-bluetooth-mesh-sdk-v2x-quick-start-guide.pdf) for more information how to download and use the Silicon Labs Bluetooth Mesh application.
 
-![Bluetooth Mesh start screen](readme_img2.png)
+   Mobile Phone provisioning is illustrated in the following figure.
 
-6. Now you should find your device advertising. Tap **PROVISION**.
+![Bluetooth Mesh start screen](readme_img6.png)
 
-![Bluetooth Browser](readme_img3.png)
+5. Open the app and choose the Provision Browser and tap **Scan**.
+
+![Bluetooth Mesh Provision Browser](readme_img2.png)
+
+6. Now you should find your device advertising as "light node" (iOS) or "Unknown" (Android). Tap **PROVISION**.
+
+![Bluetooth Mesh Provisioning Device](readme_img3.png)
+
+7. Configure the device as **Light CTL Server** and select the correct group to which the messages will be published (Demo group). If you want to test the Bluetooth Mesh Generic OnOff Model, the Light Lightness Model, the Scene Model or some other Mesh Model, then select the respective client instead. You can use only one at a time in our mobile application.
+
+![Bluetooth Mesh Device Configuration](readme_img4.png)
+
+8. Use the slider to set the lightness of the WSKT + radio board LED.
+
+![Lightness slider](readme_img5.png)
+
+9. The next step is to add a switch or several switches into your network, if it has not already been done. This is required to fully test the whole system, for example the friendship and other features. You can then control the light example by pressing the buttons in the **Bluetooth Mesh - SoC Switch** and **Bluetooth Mesh - SoC Switch Low Power** examples. Read the applicable example project documentation to learn more.
+
+For more information on the example, see [AN1299: Understanding the Silicon Labs Bluetooth Mesh SDK v2.x Lighting Demonstration](https://www.silabs.com/documents/public/application-notes/an1299-understanding-bluetooth-mesh-lighting-demo-sdk-2x.pdf).
 
 ## Troubleshooting
 
@@ -93,6 +120,8 @@ Before programming the radio board mounted on the mainboard, make sure the power
 [AN1317: Using Network Analyzer with Bluetooth Low Energy ® and Mesh](https://www.silabs.com/documents/public/application-notes/an1317-network-analyzer-with-bluetooth-mesh-le.pdf)
 
 [AN1318: IV Update in a Bluetooth Mesh Network](https://www.silabs.com/documents/public/application-notes/an1318-bluetooth-mesh-iv-update.pdf)
+
+[AN1299: Understanding the Silicon Labs Bluetooth Mesh SDK v2.x Lighting Demonstration](https://www.silabs.com/documents/public/application-notes/an1299-understanding-bluetooth-mesh-lighting-demo-sdk-2x.pdf)
 
 [UG295: Silicon Labs Bluetooth Mesh C Application Developer's Guide for SDK v2.x](https://www.silabs.com/documents/public/user-guides/ug295-bluetooth-mesh-dev-guide.pdf)
 
