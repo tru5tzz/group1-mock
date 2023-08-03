@@ -17,6 +17,12 @@
  ******************************************************************************/
 
 /*******************************************************************************
+ *******************************   GLOBAL VARIABLE   ***************************
+ ******************************************************************************/
+/// save uuid device
+extern uint16_t address_node_device;
+
+/*******************************************************************************
  **************************   GLOBAL FUNCTIONS   *******************************
  ******************************************************************************/
 
@@ -73,6 +79,8 @@ void app_show_btmesh_node_provisioning_started(uint16_t result)
 void app_show_btmesh_node_provisioned(uint16_t address,
                                       uint32_t iv_index)
 {
+    address_node_device = address;
+    app_log("address_node_device: %x\n",address);
     app_log("BT mesh node is provisioned (address: 0x%04x, iv_index: 0x%lx)" APP_LOG_NL,
             address,
             iv_index);

@@ -83,6 +83,8 @@ static uint8_t count_unicast_sensor;
 static uint8_t app_key_index;
 ///enable print console menu
 static bool enable_console_menu;
+/// save uuid device
+uint16_t address_node_device;
 
 /*******************************************************************************
  **************************  PROTOTYPE FUNCTIONS   *****************************
@@ -371,11 +373,11 @@ static void app_update_devices_timer_cb(sl_simple_timer_t *handle,
     sl_status_t sc;
     static uint16_t tick = 0;
 
-    if(tick <=TIMEOUT_SCAN_LIGHT){
+    if(tick <=TIMEOUT_SCAN_DEVICE){
         // find light 
         sc = mesh_lib_generic_client_get(MESH_GENERIC_ON_OFF_CLIENT_MODEL_ID,
                                         ELEMENT_INDEX_ROOT,
-                                        ADDRESS_GENERAL,
+                                        0xFFFF,
                                         app_key_index,
                                         mesh_generic_state_on_off);
         if (sc != SL_STATUS_OK)
@@ -386,41 +388,6 @@ static void app_update_devices_timer_cb(sl_simple_timer_t *handle,
         else
         {
             app_log("Success,sl_btmesh_generic_client_get\n");
-        }
-    }
-    else if (((TIMEOUT_SCAN_LIGHT<tick)&&(tick<=TIMEOUT_SCAN_SWITCH)))
-    {
-        // find switch
-        sc = mesh_lib_generic_server_publish(MESH_GENERIC_ON_OFF_SERVER_MODEL_ID,
-                                            ELEMENT_INDEX_ROOT,
-                                            mesh_generic_state_on_off);
-        if (sc != SL_STATUS_OK)
-        {
-            /* Something went wrong */
-            app_log("sl_btmesh_generic_server_publish: failed 0x%.2lx\r\n", sc);
-        }
-        else
-        {
-            app_log("Success,sl_generic_server_publish\n");
-        }
-
-    }
-    else
-    {
-        // find sensor
-        sc = sl_btmesh_sensor_client_get(0,
-                                        ELEMENT_INDEX_ROOT,
-                                        app_key_index,
-                                        0,
-                                        0);
-        if (sc != SL_STATUS_OK)
-        {
-            /* Something went wrong */
-            app_log("sl_btmesh_sensor_client_get: failed 0x%.2lx\r\n", sc);
-        }
-        else
-        {
-            app_log("Success,sl_btmesh_sensor_client_get\n");
         }
     }
     // increase tick and check timeout to stop find address
@@ -597,7 +564,7 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
         // take address light
         light_address = evt->data.evt_generic_client_server_status.server_address;
         // Save to buff light address
-        if (count_unicast_light == 0)
+        if ((count_unicast_light == 0)&&(light_address!=address_node_device))
         {
             buf_unicast_light_group[0] = light_address;
             app_log("Found an unicast address of server light: 0x%x\n", light_address);
@@ -618,7 +585,8 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
             {
                 for (index = 1; index < NUM_MAX_DEVICE; index++)
                 {
-                    if (buf_unicast_light_group[index] == 0)
+                    if ((buf_unicast_light_group[index] == 0)&&
+                        (light_address!=address_node_device))
                     {
                         buf_unicast_light_group[index] = light_address;
                         app_log("Found an address of server light: 0x%x\n",light_address);
@@ -634,6 +602,7 @@ void sl_btmesh_on_event(sl_btmesh_msg_t *evt)
         app_log("Press PB0 short to start find unicast address light,switch,sensor\n");
         break;
     case sl_btmesh_evt_generic_server_client_request_id:
+
         app_log("\n-------------------------------------\n");
         app_log("Switch pressed in group %x\n",
                 evt->data.evt_generic_server_client_request.server_address);
@@ -857,6 +826,7 @@ void sl_btmesh_on_node_provisioned(uint16_t address, uint32_t iv_index)
     // Turn off LED
     init_provision_done = true;
     sl_simple_led_turn_off(sl_led_led0.context);
+    // save address node
     app_show_btmesh_node_provisioned(address, iv_index);
     sl_simple_led_turn_off(sl_led_led0.context);
 }
